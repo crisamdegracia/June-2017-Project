@@ -1,0 +1,64 @@
+//Passport Requiring
+var passportLocalMongoose   = require('passport-local-mongoose'),
+    LocalStrategy           = require('passport-local'),
+    passport                = require('passport'),
+    
+    
+//Mongoose , express and anything else
+    bodyParser              = require('body-parser'),
+    mongoose                = require('mongoose'),
+    expressSanitizer        = require('express-sanitizer'),
+    methodOverride          = require('method-override'),
+    express                 = require('express'),
+    app                     = express(),
+
+//Models
+    User                    = require('./models/userModel'),
+//Routes
+    campRoutes              = require('./routes/campRoutes');
+
+mongoose.connect('mongodb://127.0.0.1/git_project');
+
+
+mongoose.Promise = global.Promise;
+
+app.use(require('express-session')({
+    secret: 'Wag kang Magulog Jan',
+    resave: false,
+    saveUninitialized: false
+}))
+
+app.set('view engine', 'ejs');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + '/public'));
+app.use(expressSanitizer());
+app.use(methodOverride('_method'));
+
+//Passport Config
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+//authenticating the new user
+passport.use(new LocalStrategy(User.authenticate()));
+
+//after authenticating from local-passport-mongoose 
+//users info are encoding it back to the the session
+passport.serializeUser(User.serializeUser());
+//unencoding the user's info to the session
+passport.deserializeUser(User.deserializeUser());
+
+//setting User's Info
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+})
+
+
+app.use(campRoutes);
+
+
+app.listen(27107, function(){
+    console.log('Server Started....')
+})
