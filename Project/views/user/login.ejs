@@ -1,0 +1,15 @@
+<% include ../partials/header %>
+
+    <section>
+        <div class="container m-5 p-5">
+            <h3 class="text-center">Sign In</h3>
+            <form action="/login" method="post" class="text-center">
+                <input type="text" class="form-control mb-1 col-md-6 offset-md-3" name="username" placeholder="Enter Username" autofocus required>
+                <input type="text" class="form-control mb-1 col-md-6 offset-md-3" name="password" placeholder="Enter Password"  required>
+                <button class="btn btn-primary col-md-2 mt-2">Submit</button>
+            </form>
+        </div>
+    </section>
+
+
+<% include ../partials/footer %>

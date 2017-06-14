@@ -14,14 +14,17 @@
 
 <section>
     <div class="container">
-        <div class="d-inline-block">
+        <div class="d-flex flex-wrap text-center justify-content-center">
              <% data.forEach(function(data){ %>
-                <div class="blog-contents"> <%= data.title %></div> 
-                <img class="img-thumbnail" src="<%= data.image %>" alt="">
-                <p><%= data.body.substring(0,100) %>... </p>            
+                <div class="blog-contents ">
+                <img class="img-responsive" src="<%= data.image %>" alt="">
+                <h3 class="display-4"> <%= data.title %> </h3>
+                <p><%= data.body.substring(0,100) %>... </p>
+                <a href="index/<%= data._id %>/show" class="btn btn-primary">&raquo; view more</a>
+                </div>       
             <%  })  %>
-        </div>
-    </div>
+        </div><!--row-->
+    </div><!--container-->
 </section>
 
 

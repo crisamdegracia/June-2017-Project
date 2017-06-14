@@ -8,7 +8,7 @@
 </head>
 <body>
     
- <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+ <nav class="navbar navbar-toggleable-md fixed-top navbar-inverse bg-inverse">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -22,9 +22,14 @@
      
     </ul>
     <form class="form-inline my-2 my-lg-0">
+      
+       <% if(!currentUser){ %>
         <a class="mr-sm-2" href='/register'>Register</a>
         <a class="mr-sm-2" href='/login'>Login</a>
-        <a class="mr-sm-2" href='/logout'>Logout</a>
+        <% } else { %>
+        <a href="/">Signed As <%= currentUser.username %> </a> 
+        <a class="mr-sm-2 ml-1" href='/logout'>Logout</a>
+        <% } %>
     </form>
   </div>
 </nav>

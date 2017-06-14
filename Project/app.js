@@ -14,8 +14,11 @@ var passportLocalMongoose   = require('passport-local-mongoose'),
 
 //Models
     User                    = require('./models/userModel'),
+    
 //Routes
-    campRoutes              = require('./routes/campRoutes');
+    campRoutes              = require('./routes/campRoutes'),
+    commentRoutes           = require('./routes/commentRoutes'),
+    userRoutes              = require('./routes/userRoutes')
 
 mongoose.connect('mongodb://127.0.0.1/git_project');
 
@@ -57,6 +60,8 @@ app.use(function(req, res, next){
 
 
 app.use(campRoutes);
+app.use(commentRoutes);
+app.use(userRoutes);
 
 
 app.listen(27107, function(){
