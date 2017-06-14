@@ -1,11 +1,12 @@
 var express = require('express'),
+    //merge params is for detecting the id from the user
     router  = express.Router({mergeParams:true}),
     Camp    = require('../models/campModel'),
     Comment = require('../models/commentModel');
 
 
 
-router.get('/index/:id/comment', function(req, res){
+router.get('/',  isLoggedIn , function(req, res){
     Camp.findById(req.params.id, function(err, foundUser){
         if(err){
             console.log(err)
@@ -16,7 +17,7 @@ router.get('/index/:id/comment', function(req, res){
     })
 })
 
-router.post('/index/:id/comment' , function(req, res) {
+router.post('/' , function(req, res) {
     Camp.findById(req.params.id, function(err, foundUser){
         if(err){
             console.log(err)
@@ -27,8 +28,11 @@ router.post('/index/:id/comment' , function(req, res) {
                     console.log(err)
                 }
                 else {
-                    foundUser.save();
+                    newComment.author.id = req.user._id;
+                    newComment.author.username = req.user.username;
+                    newComment.save();
                     foundUser.comment.push(newComment);
+                    foundUser.save();
                     res.redirect('/index/' + req.params.id + '/show')
                 }
             })
@@ -36,5 +40,12 @@ router.post('/index/:id/comment' , function(req, res) {
     })
 })
 
+function isLoggedIn(req, res, next){
+    
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/')
+}
 
 module.exports = router;

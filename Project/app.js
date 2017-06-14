@@ -59,9 +59,9 @@ app.use(function(req, res, next){
 })
 
 
-app.use(campRoutes);
-app.use(commentRoutes);
-app.use(userRoutes);
+app.use('/' ,userRoutes);
+app.use('/index',campRoutes);
+app.use('/index/:id/comment', commentRoutes);
 
 
 app.listen(27107, function(){

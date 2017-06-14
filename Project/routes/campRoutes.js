@@ -1,14 +1,12 @@
 var express = require('express'),
-    router  = express.Router(),
+    router  = express.Router({mergeParams:true}),
     Camp    = require('../models/campModel')
 
 
-router.get('/' , function(req, res){
-    res.redirect('/index')
-})
+
 
 //Index
-router.get('/index' , function(req, res) {
+router.get('/' , function(req, res) {
     
     Camp.find({} , function(err, user){
         if(err){
@@ -22,12 +20,12 @@ router.get('/index' , function(req, res) {
 })
 
 //NEW
-router.get('/index/new', function(req, res){
+router.get('/new', function(req, res){
     res.render('camp/new');
 })
 
 //Create
-router.post('/index/new' , function(req, res) {
+router.post('/new' , function(req, res) {
     
     Camp.create( req.body.camp , function(err, newCamp){
       if(err){
@@ -40,7 +38,7 @@ router.post('/index/new' , function(req, res) {
 })
 
 //SHOW
-router.get('/index/:id/show' , isLoggedIn ,  function(req, res){
+router.get('/:id/show' ,  function(req, res){
     Camp.findById(req.params.id).populate('comment').exec(function(err, foundUser){
         if(err){
             console.log(err)
@@ -53,7 +51,7 @@ router.get('/index/:id/show' , isLoggedIn ,  function(req, res){
 })
 
 //Edit 
-router.get('/index/:id/edit' , function(req, res) {
+router.get('/:id/edit' , function(req, res) {
     Camp.findById(req.params.id, function(err, foundUser){
         if(err){
             console.log(err)
@@ -65,7 +63,7 @@ router.get('/index/:id/edit' , function(req, res) {
 })
 
 //UPDATE
-router.put('/index/:id', function(req, res){
+router.put('/:id', function(req, res){
     Camp.findByIdAndUpdate(req.params.id , req.body.camp , function(err, foundUser) {
         if(err){
             console.log(err)
@@ -77,7 +75,7 @@ router.put('/index/:id', function(req, res){
 })
 
 //DESTROY
-router.delete('/index/:id', function(req, res){
+router.delete('/:id', function(req, res){
     Camp.findByIdAndRemove(req.params.id , function(err){
         if(err){
             console.log(err)

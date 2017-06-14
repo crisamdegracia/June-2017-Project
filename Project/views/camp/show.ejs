@@ -34,7 +34,7 @@
                 <% data.comment.forEach(function(data){ %>
                 <div class="comment-container">
                     <small class="lead float-right"><%= data.created.toDateString() %> </small>
-                    <h4><%= data.author%></h4>
+                    <h4><%= data.author.username%></h4>
                     <hr>
                     <p><%= data.text %></p>
                 </div>

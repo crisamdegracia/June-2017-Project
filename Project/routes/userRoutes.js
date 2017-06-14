@@ -3,6 +3,9 @@ var express = require('express'),
     passport = require('passport'),
     User = require('../models/userModel')
 
+router.get('/' , function(req, res){
+    res.redirect('/index')
+})
 
 router.get('/register' , function(req, res){
     res.render('user/register')
