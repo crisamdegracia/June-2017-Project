@@ -25,9 +25,17 @@ router.get('/new', function(req, res){
 })
 
 //Create
-router.post('/new' , function(req, res) {
+router.post('/new' , isLoggedIn , function(req, res) {
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    },
+        title = req.body.camp.title,
+        image = req.body.camp.image,
+        body  = req.body.camp.body;
+   
     
-    Camp.create( req.body.camp , function(err, newCamp){
+    Camp.create({title: title, image:image, body:body, author: author } , function(err, newCamp){
       if(err){
           console.log(err)
       }  else {
@@ -92,8 +100,27 @@ function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
-    res.redirect('/')
+    res.redirect('/login')
 }
 
 
 module.exports = router;
+
+
+
+//
+//
+//Dolor occaecat iudicem, non veniam ita summis, illum in cupidatat ad lorem 
+//laboris imitarentur nam nam irure noster se singulis, officia velit multos 
+//nescius quis, ad illum enim ad incididunt, aliquip duis proident deserunt. 
+//Mentitum hic varias officia, nam fore nulla legam excepteur do officia ne fugiat 
+//officia, admodum tractavissent ea probant. Magna cupidatat qui multos tamen, 
+//    expetendis culpa fabulas offendit. Dolor philosophari commodo duis fabulas, 
+//        minim incididunt et quibusdam. Sed culpa laboris sempiternum te quamquam quis 
+//        mentitum, quae si admodum se sint, id incididunt id doctrina an a nisi 
+//        voluptatibus, an o veniam enim dolore, hic duis sempiternum o consequat 
+//        praesentibus iis occaecat. Voluptate labore ingeniis occaecat o offendit in 
+//            legam se multos te ubi fore vidisse eu in malis efflorescere, senserit anim 
+//            tamen officia dolore, quae exquisitaque officia amet singulis eu cillum occaecat 
+//            consectetur ab aut litteris ita aliquip. O qui distinguantur ex excepteur sint 
+//            lorem ita culpa.

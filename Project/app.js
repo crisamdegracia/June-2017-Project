@@ -44,10 +44,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //authenticating the new user
+//User.authencticate is from passportLocalMongoose's users info/input
+ 
 passport.use(new LocalStrategy(User.authenticate()));
 
 //after authenticating from local-passport-mongoose 
 //users info are encoding it back to the the session
+// user that has registered or logged in.
 passport.serializeUser(User.serializeUser());
 //unencoding the user's info to the session
 passport.deserializeUser(User.deserializeUser());
@@ -59,8 +62,8 @@ app.use(function(req, res, next){
 })
 
 
-app.use('/' ,userRoutes);
-app.use('/index',campRoutes);
+app.use('/' , userRoutes);
+app.use('/index', campRoutes);
 app.use('/index/:id/comment', commentRoutes);
 
 

@@ -15,6 +15,7 @@
                 <img class="img-responsive" src="<%= data.image %>" alt="">
                 <h3 class="float-right p-2">$9.00</h3>
                 <h3 class="display-4 p-2"> <%= data.title %> </h3>
+                <h2 class="lead"> <small class="lead">Created By: </small> <%= data.author.username %> </h2>
                 <p class="p-4"><%= data.body %> </p>
                 <!--ADD Comment-->
                 <a href="/index/<%= data._id %>/comment" class="btn btn-success">Add Comment</a>
@@ -34,7 +35,7 @@
                 <% data.comment.forEach(function(data){ %>
                 <div class="comment-container">
                     <small class="lead float-right"><%= data.created.toDateString() %> </small>
-                    <h4><%= data.author.username%></h4>
+                    <h4><%= data.author.username %></h4>
                     <hr>
                     <p><%= data.text %></p>
                 </div>

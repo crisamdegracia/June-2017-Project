@@ -11,6 +11,9 @@ router.get('/register' , function(req, res){
     res.render('user/register')
 })
 
+
+//after registering it will go to the serializeUse and deserialize user
+// to encode and unencode to the session
 router.post('/register' , function(req, res){
     req.body.username
     req.body.password
