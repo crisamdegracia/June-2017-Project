@@ -5,7 +5,7 @@ var express = require('express'),
     Comment = require('../models/commentModel');
 
 
-
+//New ROutes
 router.get('/',  isLoggedIn , function(req, res){
     Camp.findById(req.params.id, function(err, foundUser){
         if(err){
@@ -28,7 +28,7 @@ router.post('/' , function(req, res) {
                     console.log(err)
                 }
                 else {
-                    
+
                     newComment.author.id = req.user._id;
                     newComment.author.username = req.user.username;
                     newComment.save();
@@ -42,11 +42,11 @@ router.post('/' , function(req, res) {
 })
 
 function isLoggedIn(req, res, next){
-    
+
     if(req.isAuthenticated()){
         return next();
     }
-    res.redirect('/')
+    res.redirect('/login')
 }
 
 module.exports = router;

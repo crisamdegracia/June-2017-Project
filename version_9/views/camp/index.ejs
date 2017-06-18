@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+<section>
+
+    <div class="container-fluid m-5 p-5 text-center">
+    <div class="jumbotron-fluid">
+        <h2 class="display-3">Negative Balance Blog</h2>
+        <small class="lead">Publish Your Blog To The Whole New Different Level <strong>Let's Go!</strong></small>
+        <hr>
+        <a href="/index/new" class="btn btn-primary">Create a Blog Now!</a>
+    </div>
+    </div>
+
+</section>
+
+<section>
+    <div class="container">
+        <div class="d-flex flex-wrap text-center justify-content-center">
+             <% data.forEach(function(data){ %>
+                <div class="blog-contents ">
+                <img class="img-responsive" src="<%= data.image %>" alt="">
+                <h3 class="display-4"> <%= data.title %> </h3>
+                <p><%= data.body %>... </p>
+                <a href="/index/<%= data._id %>" class="btn btn-primary">&raquo; view more</a>
+                </div>       
+            <%  })  %>
+        </div><!--row-->
+    </div><!--container-->
+</section>
+
+
+<% include ../partials/footer %>
