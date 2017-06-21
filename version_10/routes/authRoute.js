@@ -1,53 +1,44 @@
-var express     = require('express'),
-    router      = express.Router(),
-    User        = require('../models/authModel'),
-    passport    = require('passport');
+var express = require('express'),
+    router  = express.Router(),
+    User    = require('../models/authModel'),
+    passport    = require('passport')
 
-
-//Redirect to Index
-router.get('/' , function(req, res){
-    res.redirect('/index')
+router.get('/' , function(req, res ){
+  res.redirect('/index')
 })
 
-
-//REGISTER FORM
+//register
 router.get('/register' , function(req, res){
-    res.render('./auth/register')
+    res.render('auth/register')
 })
-
-//REGISTER POST
-router.post('/register', function(req, res){
-    req.body.username
-    req.body.password
-
-    User.register(new User({username: req.body.username}) , req.body.password, function(err, newUser){
+//Post Register.
+router.post('/register' , function(req, res){
+        req.body.username
+        req.body.password
+    User.register(new User({username: req.body.username}), req.body.password , function(err, newUser){
         if(err){
-            return res.redirect('/register')    
-        }
+            return res.render('auth/register')
+        } 
         passport.authenticate('local')(req, res, function(){
-            res.redirect('/index')
+            res.redirect('/')
         })
     })
 })
 
-//LOGIN FORM
 router.get('/login' , function(req, res){
-    res.render('./auth/login')
-});
+    res.render('auth/login')
+})
 
-//LOGIN POST
-router.post('/login', passport.authenticate('local' , {
+router.post('/login' , passport.authenticate('local' , {
     successRedirect: '/index',
     failureRedirect: '/register'
 }), function(req, res){
-    
+
 })
 
-router.get('/logout' , function(req, res){
-
-    req. logout();
-    res.redirect('/');
-
+router.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/index')
 })
 
 

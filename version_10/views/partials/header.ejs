@@ -23,13 +23,14 @@
     </ul>
     <form class="form-inline my-2 my-lg-0">
       
+      <% if(!currentUser){ %>
        
         <a class="mr-sm-2" href='/register'>Register</a>
         <a class="mr-sm-2" href='/login'>Login</a>
-    
-        <a href="/" class="p-2">Signed-In As  </a> 
+    <% } else { %>
+        <a href="/" class="p-2">Signed-In As <%= currentUser.username %>  </a> 
         <a class="mr-sm-2 ml-1" href='/logout'>Logout</a>
-  
+  <% } %>
     </form>
   </div>
 </nav>

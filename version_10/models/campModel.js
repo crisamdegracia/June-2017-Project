@@ -6,19 +6,19 @@ var mongoose    = require('mongoose'),
         image: String,
         body: String,
         created: {type: Date, default: Date.now},
-        author: {
-            id: { 
-                type:mongoose.Schema.Types.ObjectId,
-                ref: 'User'
-            },
-            name: String
-        },
         comment: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Comment'
             }
-        ]
+        ],
+        author: {
+            id: { 
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            name: String
+        }
     })
 
 

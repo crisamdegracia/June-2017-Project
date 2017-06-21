@@ -51,7 +51,18 @@ router.post('/new' , function(req, res) {
             }
         })
 })
-
+//Show
+router.get('/:id', function(req, res){
+    Camp.findById(req.params.id).populate('comment').exec(function(err, foundUser){
+        if(err){
+            console.log(err)
+        } else {
+            console.log(foundUser)
+            res.render('camp/show' , {data: foundUser})
+            
+        }
+    })
+})
 
 
 
