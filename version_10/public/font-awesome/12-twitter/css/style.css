@@ -1,0 +1,99 @@
+body {
+/*    text-align: center;*/
+}
+
+ 
+.mainContainer {
+    padding: 5%;
+}
+
+#widget {
+    
+}
+
+#toggleLogin {
+    padding-right: 15px;
+}
+
+#loginAlertSuccess {
+    display: none ;
+   
+}
+#loginAlert {
+    display: none ;   
+}
+
+
+.time {
+    
+    color:lightgrey !important;
+}
+
+.tweet {
+    
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px 5px;
+    margin:5px;
+    overflow: auto;
+}
+
+
+#tweetSuccess {
+    display: none;
+}
+#tweetFailed {
+    display: none;
+}
+
+footer {
+    height: auto;
+    background: url('../image/bg.jpg')no-repeat center;
+    margin-bottom: -1%;
+    margin-top: 20%;
+    padding-top: 40px;
+    padding-bottom: 120px;
+    text-align: center;
+}
+
+
+.fa-windows:hover,
+.fa-html5:hover,
+.fa-css3:hover,
+.fa-linkedin:hover,
+.fa-google-plus:hover,
+.fa-android:hover,
+.fa-facebook:hover,
+.fa-twitter:hover{
+    background-color: black;
+    color: whitesmoke;
+}
+
+.fa-github:hover,
+.fa-code:hover {
+    background: white;
+    color: black;
+    border: 1px solid black;
+    padding: 18px;
+    
+}
+.fa-windows{background-color:olivedrab; color: black;}
+.fa-code{background-color: black; color:white;}
+.fa-css3{background-color: yellow; color: black}
+.fa-html5{background-color: firebrick; color:black; }
+.fa-linkedin{background-color: mediumblue; color:white;}
+.fa-google-plus{background-color: firebrick; color:white;}
+.fa-twitter{background-color: dodgerblue; color:white;}
+.fa-github{background-color: black; color:white;}
+.fa-android{background-color: darkgreen;color:black;}
+
+.fa-facebook{
+    background-color: darkblue;
+    color:white;
+}
+
+.fa {
+    padding:19px;
+    border-radius: 90%;
+    font-size: 32px;
+}

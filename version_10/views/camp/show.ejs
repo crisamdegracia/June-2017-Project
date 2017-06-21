@@ -1,0 +1,50 @@
+<% include ../partials/header %>
+
+<section>
+    <div class="container p-5 m-5">
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                <ul class="list-group">
+                    <li class="list-group-item active">info 1</li>
+                    <li class="list-group-item">info 2</li>
+                    <li class="list-group-item">info 3</li>
+                </ul>
+
+            </div>
+            <div class="col-md-9 col-sm-9">
+                <img class="img-responsive" src="<%= data.image %>" alt="">
+                <h3 class="float-right p-2">$9.00</h3>
+                <h3 class="display-4 p-2"> <%= data.title %> </h3>
+                <h2 class="lead"> <small class="lead">Created By: </small> <%= data.author.name %> </h2>
+                <p class="p-4"><%= data.body %> </p>
+                <!--ADD Comment-->
+                <a href="/index/<%= data._id %>/comment" class="btn btn-success">Add Comment</a>
+                <!--EDIT-->
+                <a href="/index/<%= data._id %>/edit" class="btn btn-primary">Edit</a>
+                <!--DELETE-->
+                <form action="/index/<%= data._id %>?_method=DELETE" method="post" class="d-inline">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div><!--col-md-12-->
+        </div><!--row-->
+
+        <!--SHOW COMMENTS-->
+        <div class="col-md-9 col-sm-9 offset-md-3 mt-4 p-4">
+            <h2>Reviews</h2>
+            <div class="container">
+                <% data.comment.forEach(function(data){ %>
+                <div class="comment-container">
+                    <small class="lead float-right"><%= data.created.toDateString() %> </small>
+                    <h4><%= data.author.name %></h4>
+                    <hr>
+                    <p><%= data.text %></p>
+                </div>
+                <% }) %>
+
+            </div>
+        </div><!--col-md-9-->
+    </div><!--container-->
+</section>
+
+
+<% include ../partials/footer %>

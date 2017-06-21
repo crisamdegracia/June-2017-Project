@@ -1,0 +1,15 @@
+<% include ../partials/header %>
+
+<section>
+    <div class="container text-center pb-3 m-5 bg-inverse">
+       <h1 class="displa-3 text-success">Edit <%= data.title %></h1>
+        <form action="/index/<%= data._id %>/?_method=PUT" method="post">
+            <input type="text" name="camp[title]" class="form-control mb-1 col-md-6 offset-md-3 p-2" value="<%= data.title %>" autofocus required>
+            <input type="text" name="camp[image]" class="form-control mb-1 p-2 col-md-6 offset-md-3" value="<%= data.image %>" required>
+            <textarea name="camp[body]" id="" class="form-control p-2 mb-1 col-md-6 offset-md-3" placeholder="Write your Awesome Blog HERE!" cols="30" rows="10" required><%= data.body %></textarea>
+            <button class="btn btn-primary mr-auto">Update</button>
+            </form>
+    </div>
+</section>
+
+<% include ../partials/footer %>

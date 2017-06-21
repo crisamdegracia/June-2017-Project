@@ -1,0 +1,18 @@
+<% include ../partials/header %>
+
+
+<section>
+    <div class="container m-5 p-5">
+       <h3 class="text-center">Add Your Review </h3>
+        <form action="/index/<%= data._id %>/comment" method="post">
+           <div class="col-md-6 offset-md-3">
+            <input name="comment[text]" placeholder="What can you say?" type="text" autofocus class="form-control mb-2">
+            <button class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+
+<% include ../partials/footer %>
