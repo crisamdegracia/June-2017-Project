@@ -16,15 +16,21 @@
                 <h3 class="float-right p-2">$9.00</h3>
                 <h3 class="display-4 p-2"> <%= data.title %> </h3>
                 <h2 class="lead"> <small class="lead">Created By: </small> <%= data.author.name %> </h2>
-                <p class="p-4"><%= data.body %> </p>
-                <!--ADD Comment-->
-                <a href="/index/<%= data._id %>/comment" class="btn btn-success">Add Comment</a>
-                <!--EDIT-->
-                <a href="/index/<%= data._id %>/edit" class="btn btn-primary">Edit</a>
+
+                 <% if(data.author.id.equals(currentUser._id)){ %>
                 <!--DELETE-->
                 <form action="/index/<%= data._id %>?_method=DELETE" method="post" class="d-inline">
                     <button class="btn btn-danger">Delete</button>
                 </form>
+                <a href="/index/<%= data._id %>/edit/" class="btn btn-warning">Edit</a>
+                <% } %>     
+                <a href="/index/<%= data._id %>/comment" class="btn btn-success">Add Comment</a>
+                <p class="p-4"><%= data.body %> </p>
+                <!--ADD Comment-->
+
+                <!--EDIT--> 
+
+
             </div><!--col-md-12-->
         </div><!--row-->
 
