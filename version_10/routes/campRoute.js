@@ -66,7 +66,6 @@ router.get('/:id', function(req, res){
 
 //EDIT
 router.get('/:id/edit' , campOwnership ,   function(req, res){
-
     Camp.findById(req.params.id , function(err, foundUser){
         res.render('camp/edit' , {data: foundUser})
 

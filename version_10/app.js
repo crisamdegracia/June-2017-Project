@@ -32,7 +32,7 @@ app.use(require('express-session')({
     
 }))
 
-mongoose.connect('mongodb://localhost/camp_v10');
+mongoose.connect('mongodb://127.0.0.1/camp_v10');
 mongoose.Promise = global.Promise;
 
 app.set('view engine', 'ejs');
@@ -60,6 +60,6 @@ app.use('/', authRoute);
 app.use('/index', campRoute);
 app.use('/index/:id/comment' , commentRoute);
 
-app.listen(27107, function(){
+app.listen(27017, function(){
     console.log('Connected.....')
 })
