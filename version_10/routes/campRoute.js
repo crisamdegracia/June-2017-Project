@@ -38,15 +38,17 @@ router.post('/new' , isLoggedIn ,  function(req, res) {
         body
 
     Camp.create({
+        
         title:title,
         image: image,
         body:body ,
         author:author
+    
     },
-                function(err, newCamp){
-        if(err) {
-            console.log(err)
-        } 
+        function(err, newCamp){
+            if(err) {
+                console.log(err)
+             } 
         else {
             res.redirect('/')
         }
