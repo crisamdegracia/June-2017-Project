@@ -1,11 +1,12 @@
 var express     = require('express'),
     router      = express.Router({mergeParams:true}),
     Comment     = require('../models/comment'),
-    Camp        = require('../models/camp')
+    Camp        = require('../models/camp'),
+    middleware  = require('../middleware')
 
 
 //Show comment form
-router.get('/' , isLoggedIn , function(req, res){
+router.get('/' , middleware.isLoggedIn , function(req, res){
     Camp.findById(req.params.id , function(err, foundCamp){
         if(err){
             res.redirect('back')
@@ -17,11 +18,12 @@ router.get('/' , isLoggedIn , function(req, res){
 
 
 
-
+ 
 //CREATE Comment
-router.post('/' , isLoggedIn, function(req, res){
+router.post('/' , middleware.isLoggedIn, function(req, res){
     Camp.findById(req.params.id, function(err, foundCamp){
         if(err){
+            req.flash('error' , 'Something went wrong.')
             res.redirect('back')
         } else {
             Comment.create(req.body.comment, function(err, newComment){
@@ -30,7 +32,7 @@ router.post('/' , isLoggedIn, function(req, res){
                 newComment.save()
                 foundCamp.comment.push(newComment)
                 foundCamp.save()
-
+                req.flash('success', 'Successfully added comment!')
                 res.redirect('/index/' + req.params.id)
 
             })
@@ -40,43 +42,36 @@ router.post('/' , isLoggedIn, function(req, res){
 })
 
 //Edit : Show edit form with value
-router.get('/:comment_id/edit' , commentOwnership, function(req, res){
+router.get('/:comment_id/edit' , middleware.commentOwnership, function(req, res){
 
-    Camp.findById(req.params.id, function(err, foundCamp){
+    Comment.findById(req.params.comment_id , function(err , foundComment){
         if(err){
+            req.flash('You need to log in to do that.')
             res.redirect('back')
         } else {
-            Comment.findById(req.params.comment_id , function(err , foundComment){
-                if(err){
-                    res.redirect('back')
-                } else {
-                    res.render('comment/edit' , {comment:foundComment , camp_id: req.params.id})
-                }
-            })
+            
+            res.render('comment/edit' , {comment:foundComment , camp_id: req.params.id})
         }
     })
 
 })
 
 //Updated
-router.put('/:comment_id/edit' , commentOwnership, function(req, res){
-    Camp.findById(req.params.id, function(err, foundComment){
+router.put('/:comment_id/edit' , middleware.commentOwnership, function(req, res){
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment , function(err , updatedComment){
         if(err){
             res.redirect('back')
         } else {
-            Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment , function(err , updatedComment){
-                if(err){
-                    res.redirect('back')
-                } else {
-                    res.redirect('/index/' + req.params.id)
-                }
-            })
+            req.flash('success' , 'You have successfullly updated your comment!')
+            res.redirect('/index/' + req.params.id)
         }
+
+
     })
 })
 
 //DESRTROY
-router.delete('/:comment_id/' ,  commentOwnership, function(req, res){
+router.delete('/:comment_id/' ,  middleware.commentOwnership, function(req, res){
     Camp.findById(req.params.id , function(err, foundCamp){
         if(err){
             res.redirect('back')
@@ -85,6 +80,7 @@ router.delete('/:comment_id/' ,  commentOwnership, function(req, res){
                 if(err){
                     res.redirect('back')
                 } else {
+                    req.flash('success' , 'Comment removed! successfully!')
                     res.redirect('back')
                 }
             })
@@ -100,22 +96,6 @@ function isLoggedIn(req, res, next){
 }
 
 
-function commentOwnership(req, res, next) {
-    if(req.isAuthenticated()) {
-        Comment.findById(req.params.comment_id, function(err, foundComment) {
-            if(err) {
-                res.redirect('back')
-            } else {
-                if(foundComment.author.id.equals(req.user._id)){
-                    next();
-                } else {
-                    res.redirect('back')
-                }
-            }
-        })
-    } else {
-        res.redirect('back')
-    }
-}
+
 
 module.exports = router;

@@ -6,11 +6,13 @@ var express     = require('express'),
 
 
 
+
 router.get('/' , function(req, res){
 
-    res.redirect('/index')
+    res.render('camp/landing')
 
 })
+
 
 //Register Form
 router.get('/register' , function(req, res){
@@ -23,31 +25,35 @@ router.post('/register' , function(req, res){
     
     User.register(new User({username : req.body.username}) , req.body.password , function(err, newUser){
         if(err){
+            req.flash('error' , err.message)
             return res.redirect('back')
         } 
         passport.authenticate('local')(req, res, function(){
+            req.flash('success' , 'Welcome To The Campgound ' + newUser.username)
             res.redirect('/index')
         })
     })
 })
 
-//Register
+//login
 router.get('/login' , function(req, res){
+     
     res.render('user/login')
 })
 
-//REGISTER POST
+//login POST
 
-router.post('/login' , passport.authenticate('local' , {
+router.post('/login' , passport.authenticate('local' ,  {
     successRedirect: '/index',
     failureRedirect: '/login'
 }) , function(req, res){
-    
+   
 })
 
 
 router.get('/logout' , function(req, res){
     req.logout();
+    req.flash('success', 'You have successfully logged out!')
     res.redirect('/index')
 })
 

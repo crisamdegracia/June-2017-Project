@@ -1,14 +1,20 @@
 var express     = require('express'),
     router      = express.Router(),
     Camp        = require('../models/camp'),
-    Comment     = require('../models/comment')
+    Comment     = require('../models/comment'),
+    middleware  = require('../middleware'),
+    geocoder    = require('geocoder')
 
 //index
+
+
 router.get('/' , function(req, res){
+    
     Camp.find({} , function(err, foundCamp){
-        if(err){
+        if(err) {
             console.log(err)
         } else {
+            
             res.render('camp/index' , {data:foundCamp})
         }
     })
@@ -16,29 +22,38 @@ router.get('/' , function(req, res){
 
 
 //new 
-router.get('/new' , isLoggedIn ,  function(req, res){
+router.get('/new' ,  middleware.isLoggedIn ,  function(req, res){
     res.render('camp/new')
 })
 
 //create
-router.post('/:id', isLoggedIn ,  function(req, res){
+router.post('/:id',  middleware.isLoggedIn ,  function(req, res){
     var title = req.body.camp.title;
+    var price = req.body.camp.price;
     var image = req.body.camp.image;
     var body = req.body.camp.body;
     var author = {
         id: req.user._id,
         name: req.user.username
     }
+    
+    geocoder.geocode(req.body.location, function (err, data) {
+    var lat = data.results[0].geometry.location.lat;
+    var lng = data.results[0].geometry.location.lng;
+    var location = data.results[0].formatted_address;
 
     body = req.sanitize(body);
-    Camp.create({title:title, image: image , body:body , author:author}, function(err, newCamp){
+        
+    Camp.create({title:title, price: price, image: image , body:body , author:author , lng:lng, lat:lat, location:location}, function(err, newCamp){
         if(err){
             res.redirect('back')   
         } else {
-            res.redirect('/')
+            res.redirect('/index')
         }
     })
 
+})
+    
 })
 
 //Show 
@@ -54,7 +69,7 @@ router.get('/:id' ,  function(req, res){
 })
 
 //Edit Form
-router.get('/:id/edit', campOwnership , function(req, res){
+router.get('/:id/edit',  middleware.campOwnership , function(req, res){
     Camp.findById(req.params.id , function(err, foundCamp){
         if(err){
             res.redirect('back')
@@ -65,20 +80,28 @@ router.get('/:id/edit', campOwnership , function(req, res){
 })
 
 //UPDATE
-router.put('/:id/edit' , campOwnership ,  function(req, res){
-
-    Camp.findByIdAndUpdate(req.params.id, req.body.camp , function(err, updatedCamp){
+router.put('/:id/edit' ,  middleware.campOwnership ,  function(req, res){
+    
+geocoder.geocode(req.body.location, function (err, data) {
+    var lat = data.results[0].geometry.location.lat;
+    var lng = data.results[0].geometry.location.lng;
+    var location = data.results[0].formatted_address;
+    var newData = {name: req.body.camp.name, image: req.body.camp.image, description: req.body.camp.body, cost: req.body.price, location: location, lat: lat, lng: lng};
+    Camp.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, campground){
         if(err){
-            res.redirect('back')
+            req.flash("error", err.message);
+            res.redirect("back");
         } else {
-            res.redirect('/index/' + req.params.id)
+            req.flash("success","Successfully Updated!");
+            res.redirect("/index/" + campground._id);
         }
-    })
+    });
+  });
 
 })
 
 //DESTROY
-router.delete('/:id' , campOwnership ,  function(req, res) {
+router.delete('/:id' ,  middleware.campOwnership ,  function(req, res) {
     Camp.findByIdAndRemove(req.params.id , function(err){
         if(err){
             res.redirect('back')
@@ -87,35 +110,6 @@ router.delete('/:id' , campOwnership ,  function(req, res) {
         }
     })
 })
-
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-
-    res.redirect('back')
-}
-
-function campOwnership(req, res, next){
-
-    if(req.isAuthenticated()){
-        Camp.findById(req.params.id, function(err, foundCamp){
-            if(err){
-                res.redirect('back')
-            } else {
-                if(foundCamp.author.id.equals(req.user._id)){
-                    next();
-                } else {
-                    res.redirect('back')
-                }
-            }
-        })
-
-    } else {
-        res.redirect('back')
-    }
-}
 
 
 module.exports = router;

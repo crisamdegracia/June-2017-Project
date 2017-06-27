@@ -2,8 +2,8 @@ var express     = require('express'),
     router      = express.Router(),
     Camp        = require('../models/campModel'),
     Comment     = require('../models/commentModel'),
-    User        = require('../models/authModel')
-
+    User        = require('../models/authModel'),
+    middleware  = require('../middleware')
 
 //INDEX
 router.get('/' , function(req, res){
@@ -19,13 +19,13 @@ router.get('/' , function(req, res){
 })
 
 //NEW
-router.get('/new' , isLoggedIn , function(req, res){
+router.get('/new' , middleware.isLoggedIn , function(req, res){
     res.render('./camp/new')
 })
 
 
 //CREATE
-router.post('/new' , isLoggedIn ,  function(req, res) {
+router.post('/new' , middleware.isLoggedIn ,  function(req, res) {
 
     var title = req.body.camp.title,
         image = req.body.camp.image,
@@ -67,7 +67,7 @@ router.get('/:id', function(req, res){
 })
 
 //EDIT
-router.get('/:id/edit' , campOwnership ,   function(req, res){
+router.get('/:id/edit' , middleware.campOwnership ,   function(req, res){
     Camp.findById(req.params.id , function(err, foundUser){
         res.render('camp/edit' , {data: foundUser})
 
@@ -75,7 +75,7 @@ router.get('/:id/edit' , campOwnership ,   function(req, res){
 })
 
 //UPDATE
-router.put('/:id/edit' , campOwnership , function(req,  res) {
+router.put('/:id/edit' , middleware.campOwnership , function(req,  res) {
     Camp.findByIdAndUpdate(req.params.id , req.body.camp , function(err, updateUser){
         if(err){
             console.log(err)
@@ -85,7 +85,7 @@ router.put('/:id/edit' , campOwnership , function(req,  res) {
     })
 })
 //DESTROY
-router.delete('/:id/', campOwnership, function(req , res){
+router.delete('/:id/', middleware.campOwnership, function(req , res){
 
     Camp.findByIdAndRemove(req.params.id , function(err){
         if(err){
@@ -95,35 +95,7 @@ router.delete('/:id/', campOwnership, function(req , res){
         }
     })
 })
-function isLoggedIn(req, res , next){
-    if(req.isAuthenticated()){
-        return next();
-    } 
-    res.redirect('/login')
-}
 
-function campOwnership(req, res, next) {
 
-    //if user logged in
-    if(req.isAuthenticated()){
-
-        Camp.findById(req.params.id , function(err, foundUser){
-            if(err){
-                res.redirect('back')
-            } else {
-                //does user own the campground?
-                if(foundUser.author.id.equals(req.user._id)){
-                    next();
-                } else {
-                    // otherwise redirect somwhere
-                    res.redirect('back')
-                }
-            }
-        })
-        //if not redirect somewher
-    } else {
-        res.redirect('back')
-    }
-}
 
 module.exports = router;
