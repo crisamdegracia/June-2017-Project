@@ -1,0 +1,30 @@
+<% include ../partials/header %>
+
+<section>
+    <div class="container">
+
+        <form action="/index/<%= camp_id %>/comment/<%= comment._id %>?_method=PUT" method="post">
+          <h3 class="display-4 text-center">Edit Comment</h3>
+           <div class="col-md-6 col-sm-6 m-auto">
+            <input type="text" name="comment[text]" value="<%= comment.text %>" class="form-control my-3">
+            <button class="btn btn-success">Update Comment</button>
+            </div>
+        </form>
+
+    </div>
+    
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</section>
+
+
+<% include ../partials/footer %>

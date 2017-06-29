@@ -35,9 +35,9 @@ router.post('/:id',  middleware.isLoggedIn ,  function(req, res){
     var author = {
         id: req.user._id,
         name: req.user.username
-    }
+    };
     
-    geocoder.geocode(req.body.location, function (err, data) {
+    geocoder.geocode(req.body.camp.location, function (err, data) {
     var lat = data.results[0].geometry.location.lat;
     var lng = data.results[0].geometry.location.lng;
     var location = data.results[0].formatted_address;

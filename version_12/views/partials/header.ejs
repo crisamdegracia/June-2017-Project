@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>YelpCamp v_12</title>
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/stylesheet/main.css">
+    </head>
+    <body>
+
+        <nav class="navbar mb-5 navbar-toggleable-md  fixed-top navbar-inverse bg-inverse">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="/landing">Yelp Camp</a>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/index">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <% if(!currentUser){ %>
+                    <a class="btn btn-success mr-sm-2" href="/register">Register</a>
+                    <a class="btn btn-success" href="/login">Log in</a>
+
+                    <% } else {  %>
+                    <p class="text-white px-4 my-2">Logged In As <span><%= currentUser.username %> </span></p>
+                    <a href="/logout" class="btn btn-danger">Log out</a>
+                    <% } %>
+                </form>
+            </div>
+        </nav>
+
+        <div class="container w-75 text-center" style="margin-top: 100px">
+            <% if(error && error.length > 0 ) { %>
+            <div class="alert alert-danger">
+
+                <h1 class="lead"> <%= error %> </h1>
+
+            </div>
+            <% } %>
+
+            <% if( success && success.length > 0 ) { %>
+            <div class="alert alert-success">
+                <h1> <%= success %> </h1>
+            </div>
+            <% } %>
+        </div>

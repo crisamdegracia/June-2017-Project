@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+
+<section>
+    <div class="container my-5">
+       <h4 class="display-4 text-center">Edit <%= data.title %></h4>
+        <form action="/index/<%= data._id %>/edit?_method=PUT" method="post">
+            <div class="col-md-6 col-sm-6 m-auto">
+                <input type="text" name="camp[title]" class="form-control my-2" value="<%= data.title %>" autofocus required>
+            </div>
+            <div class="col-md-6 col-sm-6 m-auto">
+                <input type="text" name="camp[image]" class="form-control my-2" value="<%= data.image %>"  required>
+            </div>
+            <div class="col-md-6 col-sm-6 m-auto">
+                <input type="text" name="camp[price]" class="form-control my-2" value="<%= data.price %>" required>
+            </div>
+            <div class="col-md-6 col-sm-6 m-auto">
+                <input type="text" name="camp[location]" class="form-control my-2" value="<%= data.location %>"  required>
+            </div>
+            <div class="col-md-6 col-sm-6 m-auto">
+                <textarea name="camp[body]" id="" class="form-control" cols="30" rows="10" required><%= data.body %></textarea>
+            </div>
+            <div class="text-center mt-2">
+                <button class="btn btn-primary">Submit</button>
+            </div>            
+        </form>
+    </div>
+</section>
+
+
+
+<% include ../partials/footer %>

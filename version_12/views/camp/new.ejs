@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+
+<section>
+    <div class="container my-5">
+       <h4 class="display-4 text-center">Let's Create Your Camp!</h4>
+        <form action="/index/new" method="post">
+            <div class="col-md-6 col-sm-6 m-auto">
+                <input type="text" name="camp[title]" class="form-control my-2" placeholder="Title" autofocus required>
+            </div>
+            <div class="col-md-6 col-sm-6 m-auto">
+                <input type="text" name="camp[image]" class="form-control my-2" placeholder="Url image here"  required>
+            </div>
+            <div class="col-md-6 col-sm-6 m-auto">
+                <input type="text" name="camp[price]" class="form-control my-2" placeholder="Your Desired Price" required>
+            </div>
+            <div class="col-md-6 col-sm-6 m-auto">
+                <input type="text" name="camp[location]" class="form-control my-2" placeholder="North Carolina, USA"  required>
+            </div>
+            <div class="col-md-6 col-sm-6 m-auto">
+                <textarea name="camp[body]" id="" class="form-control" cols="30" rows="10" placeholder="Write Your Amazing Description here!" required></textarea>
+            </div>
+            <div class="text-center mt-2">
+                <button class="btn btn-primary">Submit</button>
+            </div>            
+        </form>
+    </div>
+</section>
+
+
+
+<% include ../partials/footer %>
