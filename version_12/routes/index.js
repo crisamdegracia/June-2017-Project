@@ -4,6 +4,10 @@ var express  = require('express'),
     passport = require('passport')
 
 
+router.get('/landing' , function(req, res){
+    res.render('camp/landing')
+})
+
 router.get('/' , function(req, res){
     res.redirect('/index')
 })

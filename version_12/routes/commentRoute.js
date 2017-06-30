@@ -5,7 +5,8 @@ var express     = require('express'),
     middleware  = require('../middleware')
 
 
-router.post('/', function(req, res){
+//Create Comment
+router.post('/', middleware.isLoggedIn,  function(req, res){
     Camp.findById(req.params.id, function(err, foundUser){
         if(err){
             req.flash('error',"Couldn't find user.")

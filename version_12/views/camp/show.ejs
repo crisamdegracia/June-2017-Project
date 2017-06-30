@@ -36,7 +36,7 @@
                         <form action="/index/<%= data._id %>/comment/<%= comment._id %>?_method=DELETE" class="d-inline" method="post">
                             <button class="btn btn-sm btn-danger">Delete</button>
                         </form>
-                        
+
                         <% } %>
                         <hr>
                         <% }) %>
@@ -44,7 +44,7 @@
 
 
                         <form action="/index/<%= data._id %>/comment" method="post">
-                           <textarea name="comment[text]" cols="10" rows="5" class="form-control my-3" placeholder="Write your comment"></textarea>
+                            <textarea name="comment[text]" cols="10" rows="5" class="form-control my-3" placeholder="Write your comment"></textarea>
                             <button class="btn btn-success">Add Comment</button>
                         </form>
 
@@ -55,11 +55,16 @@
 
             <div class="col-md-3 col-sm-3 showInfoSection">
                 <ul>
-                    <li>info 1</li>
-                    <li>info 2</li>
-                    <li>info 3</li>
+                    
+                    <% allCamp.forEach(function(camp ,i){ %>
+                       <% if(i < 3 ) { %>
+
+                    <li> <%= camp.title %></li>
+
+                    <% } %>
+                    <%    }) %>
                 </ul>
-                
+
                 <div id="map" style="width:100%; height:350px; background: red"></div>
             </div><!--col-3-->
 
@@ -96,7 +101,7 @@
             infowindow.open(map, marker);
         });
     }
-        
+
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-rsOXjG5-vXQEjd-YFC4zBBEEAb8tl6w&callback=initMap"></script>
 

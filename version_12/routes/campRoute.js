@@ -17,6 +17,8 @@ router.get('/' , function(req, res){
     })
 })
 
+
+
 //NEW ROUTE
 router.get('/new' , middleware.isLoggedIn, function(req, res){
     res.render('camp/new')
@@ -66,8 +68,15 @@ router.get('/:id' , function(req, res){
         if(err){
             req.flash('error' , 'Something went wrong.');
             res.redirect('/index')
-        } else {
-            res.render('camp/show' , {data: foundUser})
+        } else { 
+            Camp.find({} , function(err, foundCamp){
+                if(err){
+                    req.flash('error' , 'We got some error')
+                } else {
+                    
+            res.render('camp/show' , {data: foundUser , allCamp:foundCamp})
+                }
+            })
         }
     })  
     

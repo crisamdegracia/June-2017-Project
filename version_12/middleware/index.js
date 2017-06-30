@@ -9,7 +9,7 @@ middlewareObj.isLoggedIn = function(req, res, next){
     return next()
     }
     req.flash('error' , 'You do not have permission to do that, please login')
-    res.redirect('/login')
+    res.redirect('back')
     
 }
 
